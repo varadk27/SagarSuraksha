@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sagar Suraksha</title>
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">HOME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                <li><a href="#">ABOUT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                <li><a href="#caseStudies" id="incidents">INCIDENTS&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                <div class="auth-buttons">
+                    <li><a href="/" class="sign-up-btn ">Sign Up</a></li>
+                    <li> <a href="#"
+                            class="login-btn">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Log In</a></li>
+                </div>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="hero-section">
+        <div class="overlay"></div>
+        <div class="hero-content">
+
+            <div class="typewriter">
+                <h1 id="waterText">SAGAR</h1>
+              </div>
+            <h2 id="spaceText">सुरक्षा</h2>
+            <a href="#yourContentIdHere">
+                <button class="explore-btn glow-on-hover" type="button">Explore</button>
+            </a>
+            <a href="#yourContentIdHere">
+                <p class="downAngle"><i class="fa fa-angle-down"></i></p>
+            </a>
+        </div>
+    </div>
+
+    <div class="social-links">
+        <a href="#" class="social-link">FACEBOOK</a>
+        <a href="#" class="social-link">TWITTER&nbsp;&nbsp;&nbsp;</a>
+        <a href="#" class="social-link">INSTAGRAM&nbsp;&nbsp;&nbsp;</a>
+    </div>
+
+    <div class="alert">
+        <div class="alertLogo">
+            <i class='fa fa-exclamation-triangle'></i>
+        </div>
+        <div class="alertBox">
+            <div class="alertHeading">
+                New High Priority Alert
+            </div>
+            <div class="alertmsg">
+                <marquee behavior="scroll" direction="left">Potential large oil spill detected near coordinates 40.7128°
+                    N, 74.0060° W.Vessel IMO :9876543.Immediate
+                    action required. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Major oil spill detected in vicinity of
+                    coordinates 40.7128° N, 74.0060° W. Vessel IMO: 9876543. Urgent response needed to prevent further
+                    escalation. &nbsp; &nbsp; &nbsp; &nbsp; Oil spill detected near coordinates 40.7128° N, 74.0060° W.
+                    Vessel IMO: 9876543. Immediate containment and cleanup efforts necessary to avert ecological
+                    disaster.
+
+                </marquee>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="tableBox" id="yourContentIdHere">
+        <div class="table-container">
+            <table id="aisDataTable">
+                <thead>
+                    <tr>
+                        <th>Ship ID</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                        <th>COG (°)</th>
+                        <th>SOG (knots)</th>
+                        <th>Status</th>
+                        <th>Anomaly Detected</th>
+                        <th>Oil Spill Status</th>
+                        <th>Live Map Location</th>
+                        <th>Last 2hrs data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="ship001Row">
+                        <td>SHIP001</td>
+                        <td id="ship001Lat">33.68192</td>
+                        <td id="ship001Lon">-78.2509</td>
+                        <td id="ship001Cog">235</td>
+                        <td id="ship001Sog">6.3</td>
+                        <td id="ship001Status">Anomaly</td>
+                        <td id="ship001Anomaly">Yes</td>
+                        <td id="ship001OilSpill">Oil Spill Detected</td>
+                        <td><a href="/map" target="_blank">View</a></td>
+                        <td><a href="/last" target="_blank">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>SHIP002</td>
+                        <td>18.925</td>
+                        <td>72.823</td>
+                        <td>120</td>
+                        <td>15</td>
+                        <td>Normal</td>
+                        <td>No</td>
+                        <td>Clear</td>
+                        <td><a href="https://www.google.com/maps?q=19.076,72.877" target="_blank">View</a></td>
+                        <td><a href="/last" target="_blank">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>SHIP003</td>
+                        <td>22.634</td>
+                        <td>-97.882</td>
+                        <td>90</td>
+                        <td>12</td>
+                        <td>Normal</td>
+                        <td>No</td>
+                        <td>Clear</td>
+                        <td><a href="https://www.google.com/maps?q=22.634,-97.882" target="_blank">View</a></td>
+                        <td><a href="./last.html" target="_blank">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>SHIP004</td>
+                        <td>22.341</td>
+                        <td>-97.878</td>
+                        <td>150</td>
+                        <td>5</td>
+                        <td>Anomaly</td>
+                        <td>Yes</td>
+                        <td>Oil Spill Detected</td>
+                        <td><a href="https://www.google.com/maps?q=22.341,-97.878" target="_blank">View</a></td>
+                        <td><a href="./last.html" target="_blank">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>SHIP003</td>
+                        <td>22.634</td>
+                        <td>-97.882</td>
+                        <td>90</td>
+                        <td>12</td>
+                        <td>Normal</td>
+                        <td>No</td>
+                        <td>Clear</td>
+                        <td><a href="https://www.google.com/maps?q=22.634,-97.882" target="_blank">View</a></td>
+                        <td><a href="./last.html" target="_blank">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>SHIP004</td>
+                        <td>22.341</td>
+                        <td>-97.878</td>
+                        <td>150</td>
+                        <td>5</td>
+                        <td>Anomaly</td>
+                        <td>Yes</td>
+                        <td>Oil Spill Detected</td>
+                        <td><a href="https://www.google.com/maps?q=22.341,-97.878" target="_blank">View</a></td>
+                        <td><a href="./last.html" target="_blank">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>SHIP003</td>
+                        <td>22.634</td>
+                        <td>-97.882</td>
+                        <td>90</td>
+                        <td>12</td>
+                        <td>Normal</td>
+                        <td>No</td>
+                        <td>Clear</td>
+                        <td><a href="https://www.google.com/maps?q=22.634,-97.882" target="_blank">View</a></td>
+                        <td><a href="./last.html" target="_blank">View</a></td>
+                    </tr>
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="total-count">
+        <div class="anomaly">
+            Total Anomalies Detected
+            <p>24</p>
+        </div>
+        <div class="oilSpill">
+            Oil Spill Detected
+            <p>7</p>
+        </div>
+    </div>
+
+    <div class="cardBox" id="caseStudies">
+
+        <div class="card">
+            <img src="/oil1.jpeg" alt="">
+            <div class="card-content">
+                <h2 class="cardHead" style='font-weight: bolder'>
+                    Deepwater Horizon (2010)
+                </h2>
+                <p>
+                    The Deepwater Horizon oil rig explosion in the Gulf of Mexico in April 2010 resulted in the largest marine oil spill in history. Over 4.9 million barrels of oil leaked over 87 days, devastating marine ecosystems and affecting the livelihoods of coastal communities. 
+                </p>
+                <p></p>
+                <div class="find">
+                    <a href="#">
+                        Find out more
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="/oil2.jpeg" alt="">
+            <div class="card-content">
+                <h2 class="cardHead">
+                    Exxon Valdez (1989)
+                </h2>
+                <p>
+                    On March 24, 1989, the oil tanker Exxon Valdez ran aground in Prince William Sound, Alaska, spilling 11 million gallons of crude oil. The spill caused long-term damage to marine wildlife, killing thousands of sea otters, birds, and fish, and severely impacting local fisheries. 
+                </p>
+                <p></p>
+                <div class="find">
+                    <a href="#">
+                        Find out more
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="/ocean.jpeg" alt="">
+            <div class="card-content">
+                <h2 class="cardHead" style='font-weight: bolder'>
+                    Hebei Spirit (2007)
+                </h2>
+                <p>
+                    The Hebei Spirit oil spill occurred off South Korea's coast in December 2007, when a crane barge collided with the oil tanker, spilling 10,500 tons of oil into the Yellow Sea. The spill contaminated coastal areas, damaging marine life and impacting the local fishing and tourism industries. 
+                </p>
+                <p></p>
+                <div class="find">
+                    <a href="#">
+                        Find out more
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</body>
+
+</html>

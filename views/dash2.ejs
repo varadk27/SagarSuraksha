@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oil Spill Detection Dashboard</title>
+    <style>
+        /* Reset some basic elements */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            height: 100%;
+            overflow: hidden;
+            color: white;
+            /* background-color: #2c3e50; */
+        }
+
+        /* Background Image Styling */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Overlay styling */
+        .overlay-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            background-color: rgba(0, 0, 0, 0.7); /* Dark overlay for better readability */
+            min-height: 100%;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        /* Header */
+        h1 {
+            font-size: 4em;
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ecf0f1;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        /* Form styling */
+        .form-group {
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: slideInFromLeft 1s ease-in-out;
+        }
+
+        .form-group label {
+            margin-right: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .form-group select {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Table styling */
+        .table-container {
+            width: 80%;
+            overflow-x: auto;
+            margin-bottom: 30px;
+            animation: slideInFromRight 1s ease-in-out;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+            border-radius: 10px; /* Rounded corners */
+            overflow: hidden; /* Hide any overflow from rounded corners */
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            font-size: 1em;
+        }
+
+        th {
+            background-color: #1abc9c;
+            color: #ecf0f1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        td {
+            background-color: #ecf0f1;
+        }
+
+        tr:hover {
+            background-color: #bdc3c7;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Links styling */
+        a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #2980b9;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInFromLeft {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes slideInFromRight {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        /* Additional styling for mobile responsiveness */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .form-group label {
+                font-size: 1em;
+            }
+
+            .form-group select {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 10px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Image -->
+    <!-- <div class="background-image"></div> -->
+
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="./videoplayback.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Overlay Content -->
+    <div class="overlay-content">
+        <h1>Oil Spill Detection Dashboard</h1>
+
+        <div class="form-group">
+            <label for="regionSelect">Select Region:</label>
+            <select id="regionSelect">
+                <option value="mumbai">Mumbai Coast</option>
+                <option value="mexico">Mexico Coast</option>
+                <!-- Add more regions as needed -->
+            </select>
+        </div>
+
+        <div class="table-container">
+            <table id="aisDataTable">
+                <thead>
+                    <tr>
+                        <th>Ship ID</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                        <th>COG (°)</th>
+                        <th>SOG (knots)</th>
+                        <th>Status</th>
+                        <th>Anomaly Detected</th>
+                        <th>Oil Spill Status</th>
+                        <th>Live Map Location</th>
+                        <th>Last 2hrs data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="ship001Row">
+                        <td>SHIP001</td>
+                        <td id="ship001Lat"></td>
+                        <td id="ship001Lon"></td>
+                        <td id="ship001Cog"></td>
+                        <td id="ship001Sog"></td>
+                        <td id="ship001Status"></td>
+                        <td id="ship001Anomaly"></td>
+                        <td id="ship001OilSpill"></td>
+                        <td><a href="/index" target="_blank">View</a></td>
+                        <td><a href="/last" target="_blank">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>SHIP002</td>
+                        <td>18.925</td>
+                        <td>72.823</td>
+                        <td>120</td>
+                        <td>15</td>
+                        <td>Normal</td>
+                        <td>No</td>
+                        <td>Clear</td>
+                        <td><a href="https://www.google.com/maps?q=19.076,72.877" target="_blank">View</a></td>
+                        <td><a href="/last" target="_blank">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>SHIP003</td>
+                        <td>22.634</td>
+                        <td>-97.882</td>
+                        <td>90</td>
+                        <td>12</td>
+                        <td>Normal</td>
+                        <td>No</td>
+                        <td>Clear</td>
+                        <td><a href="https://www.google.com/maps?q=22.634,-97.882" target="_blank">View</a></td>
+                        <td><a href="./last.html" target="_blank">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>SHIP004</td>
+                        <td>22.341</td>
+                        <td>-97.878</td>
+                        <td>150</td>
+                        <td>5</td>
+                        <td>Anomaly</td>
+                        <td>Yes</td>
+                        <td>Oil Spill Detected</td>
+                        <td><a href="https://www.google.com/maps?q=22.341,-97.878" target="_blank">View</a></td>
+                        <td><a href="./last.html" target="_blank">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>SHIP003</td>
+                        <td>22.634</td>
+                        <td>-97.882</td>
+                        <td>90</td>
+                        <td>12</td>
+                        <td>Normal</td>
+                        <td>No</td>
+                        <td>Clear</td>
+                        <td><a href="https://www.google.com/maps?q=22.634,-97.882" target="_blank">View</a></td>
+                        <td><a href="./last.html" target="_blank">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>SHIP004</td>
+                        <td>22.341</td>
+                        <td>-97.878</td>
+                        <td>150</td>
+                        <td>5</td>
+                        <td>Anomaly</td>
+                        <td>Yes</td>
+                        <td>Oil Spill Detected</td>
+                        <td><a href="https://www.google.com/maps?q=22.341,-97.878" target="_blank">View</a></td>
+                        <td><a href="./last.html" target="_blank">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>SHIP003</td>
+                        <td>22.634</td>
+                        <td>-97.882</td>
+                        <td>90</td>
+                        <td>12</td>
+                        <td>Normal</td>
+                        <td>No</td>
+                        <td>Clear</td>
+                        <td><a href="https://www.google.com/maps?q=22.634,-97.882" target="_blank">View</a></td>
+                        <td><a href="./last.html" target="_blank">View</a></td>
+                    </tr>
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Placeholder for future chart -->
+        <div class="chart-container">
+            <!-- Chart content will go here -->
+        </div>
+    </div>
+
+    <!-- Import Chart.js for charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+</body>
+</html>

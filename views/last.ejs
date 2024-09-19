@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ship Data - Last 2 Hours</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+        }
+
+        .overlay-content {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.6); /* Dark overlay */
+            border-radius: 10px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background-color: #2980b9;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .content {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 0 0 10px 10px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-group label {
+            margin-right: 10px;
+            font-weight: bold;
+            color: #2980b9;
+        }
+
+        .form-group select {
+            padding: 5px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #2980b9;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        td a {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        td a:hover {
+            text-decoration: underline;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="./videoplayback.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div class="overlay-content">
+        <div class="header">
+            <h1>Ship Data - Last 2 Hours</h1>
+        </div>
+        <div class="content">
+            <div class="form-group">
+                <label for="shipSelect">Select Ship:</label>
+                <select id="shipSelect">
+                    <option value="SHIP001">SHIP001</option>
+                    <option value="SHIP002">SHIP002</option>
+                    <option value="SHIP003">SHIP003</option>
+                    <option value="SHIP004">SHIP004</option>
+                    <!-- Add more ships as needed -->
+                </select>
+            </div>
+
+            <div class="table-container">
+                <table id="shipDataTable">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                            <th>COG (°)</th>
+                            <th>SOG (knots)</th>
+                            <th>Speed (knots)</th>
+                            <th>Status</th>
+                            <th>Anomaly Detected</th>
+                            <th>Oil Spill Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>10:00 AM</td>
+                            <td>18.925</td>
+                            <td>72.823</td>
+                            <td>120</td>
+                            <td>15</td>
+                            <td>14</td>
+                            <td>Normal</td>
+                            <td>No</td>
+                            <td>Clear</td>
+                        </tr>
+                        <tr>
+                            <td>10:10 AM</td>
+                            <td>18.930</td>
+                            <td>72.825</td>
+                            <td>122</td>
+                            <td>16</td>
+                            <td>15</td>
+                            <td>Normal</td>
+                            <td>No</td>
+                            <td>Clear</td>
+                        </tr>
+                        <tr>
+                            <td>10:20 AM</td>
+                            <td>18.935</td>
+                            <td>72.827</td>
+                            <td>124</td>
+                            <td>16</td>
+                            <td>15</td>
+                            <td>Normal</td>
+                            <td>No</td>
+                            <td>Clear</td>
+                        </tr>
+                        <tr>
+                            <td>10:30 AM</td>
+                            <td>18.940</td>
+                            <td>72.829</td>
+                            <td>126</td>
+                            <td>17</td>
+                            <td>16</td>
+                            <td>Anomaly</td>
+                            <td>Yes</td>
+                            <td>Suspicious</td>
+                        </tr>
+                        <tr>
+                            <td>10:40 AM</td>
+                            <td>18.945</td>
+                            <td>72.831</td>
+                            <td>128</td>
+                            <td>18</td>
+                            <td>17</td>
+                            <td>Anomaly</td>
+                            <td>Yes</td>
+                            <td>Suspicious</td>
+                        </tr>
+                        <tr>
+                            <td>10:50 AM</td>
+                            <td>18.950</td>
+                            <td>72.833</td>
+                            <td>130</td>
+                            <td>19</td>
+                            <td>18</td>
+                            <td>Normal</td>
+                            <td>No</td>
+                            <td>Clear</td>
+                        </tr>
+                        <tr>
+                            <td>11:00 AM</td>
+                            <td>18.955</td>
+                            <td>72.835</td>
+                            <td>132</td>
+                            <td>20</td>
+                            <td>19</td>
+                            <td>Normal</td>
+                            <td>No</td>
+                            <td>Clear</td>
+                        </tr>
+                        <tr>
+                            <td>11:10 AM</td>
+                            <td>18.960</td>
+                            <td>72.837</td>
+                            <td>134</td>
+                            <td>21</td>
+                            <td>20</td>
+                            <td>Normal</td>
+                            <td>No</td>
+                            <td>Clear</td>
+                        </tr>
+                        <tr>
+                            <td>11:20 AM</td>
+                            <td>18.965</td>
+                            <td>72.839</td>
+                            <td>136</td>
+                            <td>22</td>
+                            <td>21</td>
+                            <td>Normal</td>
+                            <td>No</td>
+                            <td>Clear</td>
+                        </tr>
+                        <tr>
+                            <td>11:30 AM</td>
+                            <td>18.970</td>
+                            <td>72.841</td>
+                            <td>138</td>
+                            <td>23</td>
+                            <td>22</td>
+                            <td>Anomaly</td>
+                            <td>Yes</td>
+                            <td>Oil Spill Detected</td>
+                        </tr>
+                        <tr>
+                            <td>11:40 AM</td>
+                            <td>18.975</td>
+                            <td>72.843</td>
+                            <td>140</td>
+                            <td>24</td>
+                            <td>23</td>
+                            <td>Normal</td>
+                            <td>No</td>
+                            <td>Clear</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="map-container" id="map"></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Initialize map
+        var map = L.map('map').setView([18.925, 72.823], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+
+        var routeCoordinates = [
+            [18.925, 72.853],
+            [18.930, 72.855],
+            [18.935, 72.857],
+            [18.940, 72.859],
+            [18.945, 72.861],
+            [18.950, 72.863],
+            [18.955, 72.865],
+            [18.960, 72.867],
+            [18.965, 72.869],
+            [18.970, 72.871],
+            [18.975, 72.873]
+        ];
+
+        var routeLine = L.polyline(routeCoordinates, {
+            color: 'blue',
+            weight: 5,
+            opacity: 0.7
+        }).addTo(map);
+
+        map.fitBounds(routeLine.getBounds());
+
+        routeCoordinates.forEach(function(coord) {
+            L.marker(coord).addTo(map);
+        });
+
+        document.getElementById('shipSelect').addEventListener('change', function() {
+            var selectedShip = this.value;
+            console.log("Selected Ship:", selectedShip);
+            // Add logic to dynamically update the table and map
+        });
+    </script>
+
+</body>
+</html>
